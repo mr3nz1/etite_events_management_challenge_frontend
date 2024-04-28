@@ -20,10 +20,10 @@ export default function Router() {
   const router = createHashRouter([
     // User Routes
     // Auth Routes
-    {
-      path: "/",
-      element: <Events />,
-    },
+    // {
+    //   path: "/",
+    //   element: <Events />,
+    // },
     {
       path: "/users/login",
       element: (
