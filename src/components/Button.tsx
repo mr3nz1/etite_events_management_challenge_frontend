@@ -1,3 +1,5 @@
+import React, { ButtonHTMLAttributes } from "react";
+
 interface Props {
   children: React.JSX.Element | string;
   isDark?: boolean;
@@ -5,9 +7,17 @@ interface Props {
   textColor?: string;
   bgColor?: string;
   className?: string;
+  onClick?: (e: React.FormEvent<HTMLButtonElement>) => void;
+  config?: object;
 }
 
-export default function Button({ children, isDark, className }: Props) {
+export default function Button({
+  children,
+  isDark,
+  className,
+  onClick,
+  config,
+}: Props) {
   return (
     <button
       className={
@@ -21,6 +31,8 @@ export default function Button({ children, isDark, className }: Props) {
         " " +
         className
       }
+      onClick={onClick}
+      {...config}
     >
       {children}
     </button>

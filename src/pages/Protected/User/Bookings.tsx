@@ -1,23 +1,25 @@
-import { CircleLoader } from "react-spinners";
-import BookingRow from "../../../components/BookingRow";
+import { useContext, useEffect, useState } from "react";
 import SideBar from "../../../components/SideBar";
-import { useEffect, useState } from "react";
+import axios, { AxiosResponse } from "axios";
+import { UserContext } from "../../../ctx/UserContext";
 import { useParams } from "react-router-dom";
-import axios, { AxiosError, AxiosResponse } from "axios";
+import { CircleLoader } from "react-spinners";
+import { formatDate } from "../../../utils/util";
+import BookingRow from "../../../components/BookingRow";
 
-export default function AttendeeList() {
-  const [users, setUsers] = useState([]);
+export default function Bookings() {
+  const [bookings, setBookings] = useState([]);
   const [isloading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
-  const { eventId } = useParams();
+  const { userId } = useParams();
 
-  async function loadUsers() {
+  async function loadBookings() {
     try {
       setIsLoading(true);
       const url = process.env.API_URL;
       const userToken = localStorage.getItem("userToken");
       const res: AxiosResponse = await axios.get(
-        `${url}/events/${eventId}/get`,
+        `${url}/bookings/${userId}/get`,
         {
           headers: {
             Authorization: `Bearer ${userToken}`,
@@ -25,9 +27,9 @@ export default function AttendeeList() {
         }
       );
 
+      setBookings(res.data.data.bookings);
       setError("");
       setIsLoading(false);
-      setUsers(res.data.data.event.users);
     } catch (err) {
       console.log(err);
       setError((err as AxiosError).message);
@@ -36,21 +38,20 @@ export default function AttendeeList() {
   }
 
   useEffect(() => {
-    loadUsers();
+    loadBookings();
   }, []);
+
   return (
     <>
       <div className="flex">
-        <SideBar isAdmin={true} />
+        <SideBar />
         <div className="w-4/5 flex justify-center overflow-y-auto max-h-screen ">
           <div className="flex flex-col gap-5 h-full py-20">
-            <h1 className="text-gray-900 font-bold text-3xl">
-              People who bought tickets of the
-            </h1>
+            <h1 className="text-gray-900 font-bold text-3xl">Booked Events </h1>
             {error !== "" ? (
               <div className="flex flex-col gap-5 ">
                 <p className="text-xs text-center justify-center">
-                  Error loading users
+                  Error loading bookings
                 </p>
               </div>
             ) : (
@@ -60,21 +61,21 @@ export default function AttendeeList() {
                     <CircleLoader size={50} />
                   </div>
                 ) : (
-                  <div className="flex flex-1 flex-col gap-5 items-center">
+                  <div className="flex flex-1 flex-col gap-5">
                     <table className="hidden lg:block">
                       <thead>
                         <tr>
                           <th className="border text-left px-6 py-2 text-gray-900 text-sm font-bold underline">
-                            Name
+                            Date Booked
                           </th>
 
                           <th className="border text-left px-6 py-2 text-gray-900 text-sm font-bold underline">
-                            Email
+                            Event
                           </th>
-                          {/* <th className="border text-left px-6 py-2 text-gray-900 text-sm font-bold underline">
-                            Tickets
-                          </th> */}
-                          {/* <th className="border text-left px-6 py-2 text-gray-900 text-sm font-bold underline">
+                          <th className="border text-left px-6 py-2 text-gray-900 text-sm font-bold underline">
+                            Location
+                          </th>
+                          <th className="border text-left px-6 py-2 text-gray-900 text-sm font-bold underline">
                             Event Date
                           </th>
                           <th className="border text-left px-6 py-2 text-gray-900 text-sm font-bold underline">
@@ -82,27 +83,19 @@ export default function AttendeeList() {
                           </th>
                           <th className="border text-left px-6 py-2 text-gray-900 text-sm font-bold underline">
                             Options
-                          </th> */}
+                          </th>
                         </tr>
                       </thead>
 
                       <tbody className="[&>*:nth-child(odd)]:bg-gray-50 ">
-                        {users.map((user) => {
+                        {bookings.map((booking) => {
+                          console.log(booking)
                           return (
-                            <tr
-                              className={`hover:bg-gray-100 transition-all duration-75`}
-                            >
-                              <td className="border text-left px-6 py-2 text-gray-900 text-sm ">
-                                {user.name}
-                              </td>
-
-                              <td className="border text-left px-6 py-2 text-gray-900 text-sm ">
-                                {user.email}
-                              </td>
-                              {/* <td className="border text-left px-6 py-2 text-gray-900 text-sm ">
-                                Tickets
-                              </td> */}
-                            </tr>
+                            <BookingRow
+                              key={booking._id}
+                              booking={booking}
+                              loadBookings={loadBookings}
+                            />
                           );
                         })}
                       </tbody>

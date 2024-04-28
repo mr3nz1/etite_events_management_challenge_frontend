@@ -4,12 +4,12 @@ export default function ManageUsers() {
   return (
     <>
       <div className="flex">
-        <SideBar isAdmin={true} />
-        <div className="w-4/5 flex justify-center mt-20 overflow-y-scroll max-h-screen">
+        <SideBar />
+        <div className="w-4/5 flex justify-center mt-20 overflow-y-scroll max-h-screen ">
           <div className="flex flex-col gap-5">
             <h1 className="text-gray-900 font-bold text-3xl">Manage Users</h1>
 
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-5 opacity-50 pointer-events-none">
               <table>
                 <tr>
                   <th className="border text-left px-6 py-2 text-gray-900 text-sm font-bold underline">
