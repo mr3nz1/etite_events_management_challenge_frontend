@@ -9,15 +9,16 @@ import ManageUsers from "../pages/Protected/Admin/ManageUsers";
 import UpdateEvent from "../pages/Protected/Admin/UpdateEvent";
 import ProtectRoutes from "./ProtectRoutes";
 import Bookings from "../pages/Protected/User/Bookings";
+import Events from "../pages/UnProtected/Events";
 
 export default function Router() {
   const router = createHashRouter([
     // User Routes
     // Auth Routes
-    // {
-    //   path: "/",
-    //   element: <Events />,
-    // },
+    {
+      path: "/",
+      element: <Events />,
+    },
     {
       path: "/users/login",
       element: (

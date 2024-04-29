@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "./Button";
 import CancelIcon from "../assets/icons/cancel.png";
 import EditIcon from "../assets/icons/edit.png";
@@ -33,6 +33,7 @@ export default function EventCard({
   users,
   loadEvents,
 }: Props) {
+  const navigate = useNavigate();
   const {
     user: { _id: userId, admin },
   } = useContext(UserContext);
@@ -249,7 +250,13 @@ export default function EventCard({
         } flex flex-row-reverse md:flex-col gap-1 md:w-1/4 items-center justify-between md:justify-center md:self-center w-full`}
       >
         <Button
-          onClick={handleBook}
+          onClick={() => {
+            if (userId) {
+              return handleBook();
+            }
+
+            navigate("/users/login");
+          }}
           className={`${
             users.includes(userId)
               ? "cursor-not-allowed pointer-events-none"
