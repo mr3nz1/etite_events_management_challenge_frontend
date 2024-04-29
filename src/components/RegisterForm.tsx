@@ -35,7 +35,7 @@ export default function RegisterForm({ hidden }: { hidden?: boolean }) {
         password,
       });
 
-      toast("Success", {
+      toast.success("Success", {
         hideProgressBar: true,
       });
 
@@ -44,7 +44,7 @@ export default function RegisterForm({ hidden }: { hidden?: boolean }) {
       interface CustomError {
         response: AxiosResponse | { data: { message: string } };
       }
-      toast((err as CustomError).response?.data.message, {
+      toast.error((err as CustomError).response?.data.message, {
         hideProgressBar: true,
       });
     }
@@ -85,7 +85,7 @@ export default function RegisterForm({ hidden }: { hidden?: boolean }) {
             config={{ name: "passwordAgain" }}
             onChange={handleChange}
           />
-          <div className="self-start px-4 flex items-center text-xs gap-1">
+          {/* <div className="self-start px-4 flex items-center text-xs gap-1">
             <Input
               type="checkbox"
               config={{ id: "css", name: "fav_language", value: "CSS" }}
@@ -94,7 +94,7 @@ export default function RegisterForm({ hidden }: { hidden?: boolean }) {
               }}
             />
             <p>Is admin</p>
-          </div>
+          </div> */}
           <div className="flex items-center justify-between">
             <Button className="">Register</Button>
             <p className="text-xs">
