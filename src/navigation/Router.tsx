@@ -96,9 +96,9 @@ export default function Router() {
       element: (
         <div className="h-screen w-screen flex justify-center items-center">
           <div className="px-8 py-4 text-center flex flex-col gap-1">
-            <p className="text-sm">Oops</p>
-            <h1 className="text-3xl font-bold">404</h1>
-            <p className="text-sm">Page not found</p>
+            <p className="text-sm">Login to access info</p>
+            {/* <h1 className="text-3xl font-bold">404</h1>
+            <p className="text-sm">Please Login</p> */}
             <Link to="/users/login" className="mt-4">
               <p className="text-xs underline">Please Login</p>
             </Link>
