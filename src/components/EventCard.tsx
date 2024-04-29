@@ -57,7 +57,7 @@ export default function EventCard({
     try {
       const url = process.env.API_URL + `/events/${_id}/delete`;
       const userToken = localStorage.getItem("userToken");
-      const res = await axios.delete(url, {
+      await axios.delete(url, {
         headers: {
           Authorization: "Bearer " + userToken,
         },
@@ -75,7 +75,7 @@ export default function EventCard({
     }
   }
 
-  function DeleteMsg({ closeToast }) {
+  function DeleteMsg({ closeToast }: { closeToast?: () => void }) {
     return (
       <div className="flex flex-col gap-2">
         <p className="text-xs">
@@ -111,7 +111,7 @@ export default function EventCard({
     try {
       const url = process.env.API_URL + `/bookings/${_id}/create`;
       const userToken = localStorage.getItem("userToken");
-      const res = await axios.post(
+      await axios.post(
         url,
         { numberOfTickets: numberOfTickets },
         {
@@ -137,13 +137,14 @@ export default function EventCard({
     closeToast,
     remainingTickets,
   }: {
-    closeToast: any;
+    closeToast?: () => void;
     remainingTickets: number;
   }) {
     const [numberOfTickets, setNumberOfTickets] = useState(0);
 
     function handleNumberOfTicketsChange(name: string, value: string) {
-      setNumberOfTickets(value);
+      name;
+      setNumberOfTickets(parseInt(value));
     }
 
     console.log(remainingTickets);

@@ -1,18 +1,9 @@
-import {
-  Form,
-  Link,
-  Navigation,
-  Navigator,
-  Router,
-  useNavigate,
-  useNavigation,
-} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "./Button";
 import Input from "./Input";
 import { useState } from "react";
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 import { toast } from "react-toastify";
-import { error } from "console";
 
 export default function RegisterForm({ hidden }: { hidden?: boolean }) {
   const navigate = useNavigate();
@@ -50,7 +41,10 @@ export default function RegisterForm({ hidden }: { hidden?: boolean }) {
 
       navigate("/users/login");
     } catch (err) {
-      toast((err as AxiosError).response?.data.message, {
+      interface CustomError {
+        response: AxiosResponse | { data: { message: string } };
+      }
+      toast((err as CustomError).response?.data.message, {
         hideProgressBar: true,
       });
     }
@@ -63,7 +57,9 @@ export default function RegisterForm({ hidden }: { hidden?: boolean }) {
 
         <form
           onSubmit={handleSubmit}
-          className={`flex flex-col gap-5 ${hidden && "opacity-50 pointer-events-none"}`}
+          className={`flex flex-col gap-5 ${
+            hidden && "opacity-50 pointer-events-none"
+          }`}
         >
           <Input
             placeholder="Full Names"

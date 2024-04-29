@@ -32,4 +32,5 @@ export interface Event {
   createdAt?: string;
   remainingTickets?: number;
   boughtTickets?: number;
+  users?: string[];
 }

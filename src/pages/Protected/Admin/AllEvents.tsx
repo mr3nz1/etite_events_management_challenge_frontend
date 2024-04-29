@@ -58,7 +58,7 @@ export default function AllEvents() {
                         location={event.location!}
                         cancelled={event.cancelled!}
                         date={event.date!}
-                        users={event.users}
+                        users={event.users!}
                         remainingTickets={
                           event.numberOfTickets! - event.boughtTickets!
                         }

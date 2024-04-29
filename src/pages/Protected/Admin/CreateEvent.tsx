@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { SyntheticEvent, useState } from "react";
 import Button from "../../../components/Button";
 import Input from "../../../components/Input";
 import SideBar from "../../../components/SideBar";
@@ -33,7 +33,7 @@ export default function CreateEvent() {
       const url = `${process.env.API_URL}/events/create`;
       const userToken = localStorage.getItem("userToken");
 
-      const res = await axios.post(url, eventInfo, {
+      await axios.post(url, eventInfo, {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
@@ -52,9 +52,8 @@ export default function CreateEvent() {
     }
   }
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e: SyntheticEvent) {
     e.preventDefault();
-
     handleRequest();
   }
 
@@ -125,7 +124,9 @@ export default function CreateEvent() {
               </Button>
               <Button
                 config={{ type: "submit", disabled: loading }}
-                className={`${loading && "cursor-not-allowed pointer-events-none"}`}
+                className={`${
+                  loading && "cursor-not-allowed pointer-events-none"
+                }`}
               >
                 Create Event
               </Button>

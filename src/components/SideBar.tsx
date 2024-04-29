@@ -5,8 +5,9 @@ import addUserIcon from "../assets/icons/add_user.png";
 import manageUsersIcon from "../assets/icons/users.png";
 import logoutIcon from "../assets/icons/logout.png";
 import bookingsIcon from "../assets/icons/bookings.png";
+import etiteIcon from "../assets/icons/etite_logo.png";
 import SideBarButton from "./SideBarButton";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../ctx/UserContext";
 import { toast } from "react-toastify";
@@ -19,7 +20,7 @@ export default function SideBar() {
     setUser,
   } = useContext(UserContext);
 
-  function LogoutMsg({ closeToast }) {
+  function LogoutMsg({ closeToast }: { closeToast?: () => void }) {
     return (
       <div className="flex flex-col gap-2">
         <p className="text-xs">Are you sure you want to logout</p>
@@ -31,15 +32,13 @@ export default function SideBar() {
             isDark={true}
             className="text-xs"
             onClick={() => {
-              setUser({ user: { name: "", email: "", admin: false } });
+              setUser({ user: { _id: "", name: "", email: "", admin: false } });
               localStorage.removeItem("userToken");
               toast.dismiss();
               toast.info("logged out", {
                 hideProgressBar: true,
               });
-              navigate("/users/login", {
-                hideProgressBar: true,
-              });
+              navigate("/users/login");
             }}
           >
             Logout
@@ -60,6 +59,7 @@ export default function SideBar() {
   return (
     <>
       <div className="flex flex-col gap-10 items-start h-screen md:w-72 p-6 md:p-10 border-r border-gray-300 hover:border-gray-400 hover:bg-gray-50 transition-all duration-75">
+        <img src={etiteIcon} className="h-6" />
         <p className="flex md:hidden font-bold text-sm">M</p>
         <p className="hidden md:flex text-sm gap-1">
           Welcome,{"  "}

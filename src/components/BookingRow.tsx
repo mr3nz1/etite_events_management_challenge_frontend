@@ -30,8 +30,10 @@ export default function BookingRow({ booking, loadBookings }: Props) {
     try {
       const url = process.env.API_URL + `/bookings/${booking._id}/update`;
 
+      console.log(url)
+
       const userToken = localStorage.getItem("userToken");
-      const res = await axios.patch(
+      await axios.patch(
         url,
         {
           cancelled: true,
@@ -49,13 +51,14 @@ export default function BookingRow({ booking, loadBookings }: Props) {
       loadBookings();
     } catch (err) {
       console.log(err);
+      toast.dismiss();
       toast.error("Error cancelling booking with Id: " + booking._id, {
         hideProgressBar: true,
       });
     }
   }
 
-  function CancelMsg({ closeToast }) {
+  function CancelMsg({ closeToast }: { closeToast?: () => void }) {
     return (
       <div className="flex flex-col gap-2">
         <p className="text-xs">
@@ -78,7 +81,7 @@ export default function BookingRow({ booking, loadBookings }: Props) {
     );
   }
 
-  async function handleCancel({ closeToast }) {
+  async function handleCancel() {
     try {
       toast(<CancelMsg />, {
         hideProgressBar: true,
@@ -93,7 +96,7 @@ export default function BookingRow({ booking, loadBookings }: Props) {
       const url = process.env.API_URL + `/bookings/${booking._id}/update`;
 
       const userToken = localStorage.getItem("userToken");
-      const res = await axios.patch(
+      await axios.patch(
         url,
         {
           numberOfTickets,
@@ -124,13 +127,14 @@ export default function BookingRow({ booking, loadBookings }: Props) {
     closeToast,
     remainingTickets,
   }: {
-    closeToast: any;
+    closeToast?: () => void;
     remainingTickets: number;
   }) {
     const [numberOfTickets, setNumberOfTickets] = useState(0);
 
     function handleNumberOfTicketsChange(name: string, value: string) {
-      setNumberOfTickets(value);
+      name;
+      setNumberOfTickets(parseInt(value));
     }
 
     return (

@@ -1,12 +1,11 @@
 import { CircleLoader } from "react-spinners";
-import BookingRow from "../../../components/BookingRow";
 import SideBar from "../../../components/SideBar";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios, { AxiosError, AxiosResponse } from "axios";
 
 export default function AttendeeList() {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<{ name: ""; email: "" }[] | []>([]);
   const [isloading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const { eventId } = useParams();
@@ -41,7 +40,7 @@ export default function AttendeeList() {
   return (
     <>
       <div className="flex">
-        <SideBar isAdmin={true} />
+        <SideBar />
         <div className="w-4/5 flex justify-center overflow-y-auto max-h-screen ">
           <div className="flex flex-col gap-5 h-full py-20">
             <h1 className="text-gray-900 font-bold text-3xl">

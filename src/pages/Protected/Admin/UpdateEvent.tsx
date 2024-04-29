@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import Button from "../../../components/Button";
 import Input from "../../../components/Input";
 import SideBar from "../../../components/SideBar";
@@ -24,7 +24,7 @@ export default function UpdateEvent() {
   });
   const [error, setError] = useState("");
 
-  async function handleEventInfoChange(name: string, value: string | number) {
+  async function handleEventInfoChange(name: string, value: string) {
     setEventInfo((prevInfo) => ({
       ...prevInfo,
       [name]: value,
@@ -38,7 +38,7 @@ export default function UpdateEvent() {
       const url = `${process.env.API_URL}/events/${id}/update`;
       const userToken = localStorage.getItem("userToken");
 
-      const res = await axios.patch(url, eventInfo, {
+      await axios.patch(url, eventInfo, {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
@@ -57,7 +57,7 @@ export default function UpdateEvent() {
     }
   }
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e: SyntheticEvent) {
     e.preventDefault();
 
     handleRequest();

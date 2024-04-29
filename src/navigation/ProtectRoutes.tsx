@@ -11,12 +11,11 @@ export default function ProtectRoutes({
 }) {
   const navigate = useNavigate();
   const {
-    user: { name, email, admin },
+    user: { name, email },
     setUser,
   } = useContext(UserContext);
 
   const [isLoading, setIsLoading] = useState(true);
-
   useEffect(() => {
     async function getUserInfo(token: string) {
       try {
@@ -41,7 +40,7 @@ export default function ProtectRoutes({
       if (token === null) {
         console.log(token);
         console.log("if no token");
-        // setIsLoading(false);
+        setIsLoading(false);
         navigate("/users/login");
       } else {
         getUserInfo(token!);

@@ -1,5 +1,3 @@
-import EventCard from "../../components/EventCard";
-
 export default function Events() {
   return (
     <>
@@ -8,13 +6,7 @@ export default function Events() {
           <h1 className="text-gray-900 font-bold text-3xl">Events</h1>
 
           <div className="flex flex-col gap-5">
-            <EventCard />
-            <EventCard />
-            <EventCard />
             {/* <EventCard />
-            <EventCard />
-            <EventCard />
-            <EventCard />
             <EventCard />
             <EventCard /> */}
           </div>

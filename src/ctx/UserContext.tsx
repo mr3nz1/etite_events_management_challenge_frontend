@@ -2,7 +2,6 @@ import { createContext } from "react";
 // import { UserInfoType, UserState } from "../../utils/types";
 import React, { useReducer } from "react";
 import { UserActionType, UserInfoType, UserState } from "../utils/types";
-import { userInfo } from "os";
 // import userReducer from "./userReducer";
 
 function userReducer(state: UserState, action: UserActionType): UserState {
@@ -46,7 +45,7 @@ export default function UserProvider({
   const [state, dispatch] = useReducer(userReducer, initialState);
 
   async function setUser(userInfo: UserInfoType) {
-    console.log(userInfo)
+    console.log(userInfo);
     return dispatch({ type: "SET_USER", payload: userInfo });
   }
 

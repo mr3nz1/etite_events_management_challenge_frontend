@@ -3,7 +3,7 @@ import Button from "./Button";
 import Input from "./Input";
 import { useContext, useState } from "react";
 import { UserContext } from "../ctx/UserContext";
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 
 export default function LoginForm() {
@@ -12,7 +12,7 @@ export default function LoginForm() {
     email: "",
     password: "",
   });
-  const { user, setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
 
   function handleChange(name: string, value: string) {
     setUserInfo((prevValue) => ({
@@ -49,7 +49,11 @@ export default function LoginForm() {
 
       navigate("/events/all");
     } catch (err) {
-      toast.error((err as AxiosError).response?.data.message, {
+      interface CustomError {
+        response: AxiosResponse | { data: { message: string } };
+      }
+
+      toast.error((err as CustomError).response?.data.message, {
         hideProgressBar: true,
       });
     }

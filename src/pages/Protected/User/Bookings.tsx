@@ -1,14 +1,30 @@
-import { useContext, useEffect, useState } from "react";
-import SideBar from "../../../components/SideBar";
+import { useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
-import { UserContext } from "../../../ctx/UserContext";
 import { useParams } from "react-router-dom";
 import { CircleLoader } from "react-spinners";
-import { formatDate } from "../../../utils/util";
+import SideBar from "../../../components/SideBar";
 import BookingRow from "../../../components/BookingRow";
 
 export default function Bookings() {
-  const [bookings, setBookings] = useState([]);
+  const [bookings, setBookings] = useState<
+    | {
+        _id: string;
+        user: string;
+        event: {
+          _id: string;
+          title: string;
+          location: string;
+          date: string;
+          numberOfTickets: number;
+          boughtTickets: number;
+        };
+        numberOfTickets: number;
+        boughtTickets: number;
+        createdAt: string;
+        cancelled: boolean;
+      }[]
+    | []
+  >([]);
   const [isloading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const { userId } = useParams();
@@ -32,7 +48,10 @@ export default function Bookings() {
       setIsLoading(false);
     } catch (err) {
       console.log(err);
-      setError((err as AxiosError).message);
+      interface CustomError {
+        response: AxiosResponse | { data: { message: string } };
+      }
+      setError((err as CustomError).response.data.message);
       setIsLoading(false);
     }
   }
@@ -89,7 +108,7 @@ export default function Bookings() {
 
                       <tbody className="[&>*:nth-child(odd)]:bg-gray-50 ">
                         {bookings.map((booking) => {
-                          console.log(booking)
+                          console.log(booking);
                           return (
                             <BookingRow
                               key={booking._id}

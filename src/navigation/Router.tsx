@@ -1,9 +1,4 @@
-import {
-  Link,
-  RouterProvider,
-  createBrowserRouter,
-  createHashRouter,
-} from "react-router-dom";
+import { Link, RouterProvider, createHashRouter } from "react-router-dom";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 import AddUser from "../pages/Protected/Admin/AddUser";
@@ -12,7 +7,6 @@ import AttendeeList from "../pages/Protected/Admin/AttendeeList";
 import CreateEvent from "../pages/Protected/Admin/CreateEvent";
 import ManageUsers from "../pages/Protected/Admin/ManageUsers";
 import UpdateEvent from "../pages/Protected/Admin/UpdateEvent";
-import Events from "../pages/UnProtected/Events";
 import ProtectRoutes from "./ProtectRoutes";
 import Bookings from "../pages/Protected/User/Bookings";
 
@@ -106,7 +100,7 @@ export default function Router() {
             <h1 className="text-3xl font-bold">404</h1>
             <p className="text-sm">Page not found</p>
             <Link to="/users/login" className="mt-4">
-              <p className="text-xs underline">Go to home</p>
+              <p className="text-xs underline">Please Login</p>
             </Link>
           </div>
         </div>
